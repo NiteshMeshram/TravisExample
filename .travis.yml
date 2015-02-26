@@ -1,0 +1,25 @@
+language: objective-c
+before_install:
+- chmod +x scripts/add-key.sh
+- chmod +x scripts/remove-key.sh
+- chmod +x scripts/update-bundle.sh
+- chmod +x scripts/sign-and-upload.sh
+before_script:
+- ./scripts/add-key.sh
+- ./scripts/update-bundle.sh
+script:
+- xcodebuild -workspace Money\ Center/Money\ Center.xcworkspace -scheme Money\ Center.DEV -sdk iphoneos
+  -configuration DEV OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
+
+xcodebuild -project TravisExample.xcodeproj -target {target} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+
+
+after_success:
+- ./scripts/sign-and-upload.sh
+after_script:
+- ./scripts/remove-key.sh
+env:
+  global:
+  - APP_NAME=“TravisExample”
+  - 'DEVELOPER_NAME="iPhone Distribution: V2Solutions, Inc."'
+  - PROFILE_NAME="V2Inc_Universal_Disribution"
