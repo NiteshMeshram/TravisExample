@@ -8,10 +8,8 @@ before_script:
 - ./scripts/add-key.sh
 - ./scripts/update-bundle.sh
 script:
-- xcodebuild -workspace Money\ Center/Money\ Center.xcworkspace -scheme Money\ Center.DEV -sdk iphoneos
-  -configuration DEV OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
 
-xcodebuild -project TravisExample.xcodeproj -target {target} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+xcodebuild -project TravisExample.xcodeproj -target -alltargets -sdk iphoneos ONLY_ACTIVE_ARCH=NO
 
 
 after_success:
